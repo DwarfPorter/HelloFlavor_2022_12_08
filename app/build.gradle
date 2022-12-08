@@ -1,0 +1,79 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'ru.geekbrains.helloflavor'
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "ru.geekbrains.helloflavor"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            it.buildConfigField "String", "MY_BUIL_TYPE", "\"RELEASE\""
+            resValue("string", "my_build_type", "MY RELEASE FROM RESOURCE")
+        }
+        debug {
+            versionNameSuffix '-debug'
+            it.buildConfigField "String", "MY_BUIL_TYPE", "\"DEBUG\""
+            resValue("string", "my_build_type", "MY DEBUG FROM RESOURCE")
+        }
+        beta {
+            initWith debug
+            versionNameSuffix '-beta'
+            it.buildConfigField "String", "MY_BUIL_TYPE", "\"BETA\""
+            resValue("string", "my_build_type", "MY BETA FROM RESOURCE")
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+    flavorDimensions 'version', 'plus'
+    productFlavors {
+        free {
+            dimension 'version'
+            versionNameSuffix '.free'
+        }
+        pro {
+            dimension 'version'
+            versionNameSuffix '.pro'
+        }
+        demo {
+            dimension 'plus'
+            versionNameSuffix '.demo'
+        }
+        simple {
+            dimension 'plus'
+            versionNameSuffix '.simple'
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+}
